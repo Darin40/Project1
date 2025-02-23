@@ -1,0 +1,94 @@
+pipeline {
+    agent any
+
+    environment {
+        GIT_URL = 'https://github.com/suffixscope/maven-web-app.git'
+
+        // SonarQube
+        SONAR_URL = 'http://43.204.238.132:9000' 
+
+        // Nexus
+        NEXUS_URL = 'http://43.204.30.233:8081'
+        NEXUS_REPO = 'maven-releases'
+        GROUP_ID = 'com.example'
+        ARTIFACT_ID = 'maven-web-app'
+        VERSION = '1.0'
+        PACKAGING = 'war'
+
+        // Tomcat
+        TOMCAT_URL = 'http://3.108.59.248:8080'
+        WAR_NAME = 'maven-web-app.war'
+    }
+
+    tools {
+        maven 'Maven-3.8.7' // Using Jenkins Maven tool
+    }
+
+    stages {
+        stage('Checkout Code') {
+            steps {
+                git branch: 'master', url: "${GIT_URL}"
+            }
+        }
+
+        stage('Build with Maven') {
+            steps {
+                sh 'mvn clean package'
+            }
+        }
+
+        stage('SonarQube Analysis') {
+            steps {
+                withSonarQubeEnv('SonarQube') {
+                    withCredentials([string(credentialsId: 'SONAR_TOKEN', variable: 'SONAR_AUTH_TOKEN')]) {
+                        sh 'mvn sonar:sonar -Dsonar.host.url=$SONAR_URL -Dsonar.login=$SONAR_AUTH_TOKEN'
+                    }
+                }
+            }
+        }
+
+        stage('Quality Gate') {
+            steps {
+                timeout(time: 5, unit: 'MINUTES') {
+                    script {
+                        def qg = waitForQualityGate()
+                        if (qg.status != 'OK') {
+                            error "Pipeline failed due to SonarQube Quality Gate failure!"
+                        }
+                    }
+                }
+            }
+        }
+
+        stage('Upload to Nexus') {
+            steps {
+                withCredentials([usernamePassword(credentialsId: 'nexus-admin', usernameVariable: 'NEXUS_USER', passwordVariable: 'NEXUS_PASS')]) {
+                    sh """
+                        mvn deploy:deploy-file \
+                        -DgroupId=${GROUP_ID} \
+                        -DartifactId=${ARTIFACT_ID} \
+                        -Dversion=${VERSION} \
+                        -Dpackaging=${PACKAGING} \
+                        -Dfile=target/${ARTIFACT_ID}.war \
+                        -DrepositoryId=nexus \
+                        -Durl=${NEXUS_URL}/repository/${NEXUS_REPO}/ \
+                        -DgeneratePom=true \
+                        -Dauth.basic=\$NEXUS_USER:\$NEXUS_PASS
+                    """
+                }
+            }
+        }
+
+        stage('Deploy to Tomcat') {
+            steps {
+                withCredentials([usernamePassword(credentialsId: 'TOMCAT_CREDENTIALS', usernameVariable: 'TOMCAT_USER', passwordVariable: 'TOMCAT_PASS')]) {
+                    sh """
+                    curl -v -u $TOMCAT_USER:$TOMCAT_PASS \
+                    --upload-file target/${WAR_NAME} \
+                    "${TOMCAT_URL}/manager/text/deploy?path=/maven-web-app&update=true"
+                    """
+                }
+            }
+        }
+    }
+}

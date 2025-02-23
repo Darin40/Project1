@@ -1,0 +1,383 @@
+Started by admin
+[Pipeline] Start of Pipeline
+[Pipeline] node
+Running on Jenkins in /var/lib/jenkins/workspace/project
+[Pipeline] {
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] stage
+[Pipeline] { (Declarative: Tool Install)
+[Pipeline] tool
+[Pipeline] envVarsForTool
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] stage
+[Pipeline] { (Checkout Code)
+[Pipeline] tool
+[Pipeline] envVarsForTool
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] git
+Selected Git installation does not exist. Using Default
+The recommended git tool is: NONE
+No credentials specified
+ > /usr/bin/git rev-parse --resolve-git-dir /var/lib/jenkins/workspace/project/.git # timeout=10
+Fetching changes from the remote Git repository
+ > /usr/bin/git config remote.origin.url https://github.com/suffixscope/maven-web-app.git # timeout=10
+Fetching upstream changes from https://github.com/suffixscope/maven-web-app.git
+ > /usr/bin/git --version # timeout=10
+ > git --version # 'git version 2.43.0'
+ > /usr/bin/git fetch --tags --force --progress -- https://github.com/suffixscope/maven-web-app.git +refs/heads/*:refs/remotes/origin/* # timeout=10
+ > /usr/bin/git rev-parse refs/remotes/origin/master^{commit} # timeout=10
+Checking out Revision 1cfbd5a53066a9003f5d25faf825dde2a46c1618 (refs/remotes/origin/master)
+ > /usr/bin/git config core.sparsecheckout # timeout=10
+ > /usr/bin/git checkout -f 1cfbd5a53066a9003f5d25faf825dde2a46c1618 # timeout=10
+ > /usr/bin/git branch -a -v --no-abbrev # timeout=10
+ > /usr/bin/git branch -D master # timeout=10
+ > /usr/bin/git checkout -b master 1cfbd5a53066a9003f5d25faf825dde2a46c1618 # timeout=10
+Commit message: "Update scripted-jenkinsfile"
+ > /usr/bin/git rev-list --no-walk 1cfbd5a53066a9003f5d25faf825dde2a46c1618 # timeout=10
+[Pipeline] }
+[Pipeline] // withEnv
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Build with Maven)
+[Pipeline] tool
+[Pipeline] envVarsForTool
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] sh
++ mvn clean package
+[[1;34mINFO[m] Scanning for projects...
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m------------------< [0;36morg.scopeindia:01-maven-web-app[0;1m >-------------------[m
+[[1;34mINFO[m] [1mBuilding 01-maven-web-app 3.0-RELEASE[m
+[[1;34mINFO[m] [1m--------------------------------[ war ]---------------------------------[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-clean-plugin:2.5:clean[m [1m(default-clean)[m @ [36m01-maven-web-app[0;1m ---[m
+[[1;34mINFO[m] Deleting /var/lib/jenkins/workspace/project/target
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-resources-plugin:2.6:resources[m [1m(default-resources)[m @ [36m01-maven-web-app[0;1m ---[m
+[[1;33mWARNING[m] Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+[[1;34mINFO[m] skip non existing resourceDirectory /var/lib/jenkins/workspace/project/src/main/resources
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-compiler-plugin:3.1:compile[m [1m(default-compile)[m @ [36m01-maven-web-app[0;1m ---[m
+[[1;34mINFO[m] No sources to compile
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-resources-plugin:2.6:testResources[m [1m(default-testResources)[m @ [36m01-maven-web-app[0;1m ---[m
+[[1;33mWARNING[m] Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+[[1;34mINFO[m] skip non existing resourceDirectory /var/lib/jenkins/workspace/project/src/test/resources
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-compiler-plugin:3.1:testCompile[m [1m(default-testCompile)[m @ [36m01-maven-web-app[0;1m ---[m
+[[1;34mINFO[m] No sources to compile
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-surefire-plugin:2.12.4:test[m [1m(default-test)[m @ [36m01-maven-web-app[0;1m ---[m
+[[1;34mINFO[m] No tests to run.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-war-plugin:3.3.1:war[m [1m(default-war)[m @ [36m01-maven-web-app[0;1m ---[m
+[[1;34mINFO[m] Packaging webapp
+[[1;34mINFO[m] Assembling webapp [01-maven-web-app] in [/var/lib/jenkins/workspace/project/target/maven-web-app]
+[[1;34mINFO[m] Processing war project
+[[1;34mINFO[m] Copying webapp resources [/var/lib/jenkins/workspace/project/src/main/webapp]
+[[1;34mINFO[m] Building war: /var/lib/jenkins/workspace/project/target/maven-web-app.war
+[[1;34mINFO[m] [1m------------------------------------------------------------------------[m
+[[1;34mINFO[m] [1;32mBUILD SUCCESS[m
+[[1;34mINFO[m] [1m------------------------------------------------------------------------[m
+[[1;34mINFO[m] Total time:  2.835 s
+[[1;34mINFO[m] Finished at: 2025-02-23T15:45:02Z
+[[1;34mINFO[m] [1m------------------------------------------------------------------------[m
+[Pipeline] }
+[Pipeline] // withEnv
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (SonarQube Analysis)
+[Pipeline] tool
+[Pipeline] envVarsForTool
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] withSonarQubeEnv
+Injecting SonarQube environment variables using the configuration: SonarQube
+[Pipeline] {
+[Pipeline] withCredentials
+Masking supported pattern matches of $SONAR_AUTH_TOKEN
+[Pipeline] {
+[Pipeline] sh
++ mvn sonar:sonar -Dsonar.host.url=http://43.204.238.132:9000 -Dsonar.login=****
+[[1;34mINFO[m] Scanning for projects...
+[[1;33mWARNING[m] The artifact org.codehaus.mojo:sonar-maven-plugin:jar:4.0.0.4121 has been relocated to org.sonarsource.scanner.maven:sonar-maven-plugin:jar:4.0.0.4121: SonarQube plugin was moved to SonarSource organisation
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m------------------< [0;36morg.scopeindia:01-maven-web-app[0;1m >-------------------[m
+[[1;34mINFO[m] [1mBuilding 01-maven-web-app 3.0-RELEASE[m
+[[1;34mINFO[m] [1m--------------------------------[ war ]---------------------------------[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32msonar-maven-plugin:4.0.0.4121:sonar[m [1m(default-cli)[m @ [36m01-maven-web-app[0;1m ---[m
+[[1;33mWARNING[m] 15:45:07.442 Using an unspecified version instead of an explicit plugin version may introduce breaking analysis changes at an unwanted time. It is highly recommended to use an explicit version, e.g. 'org.sonarsource.scanner.maven:sonar-maven-plugin:4.0.0.4121'.
+[[1;34mINFO[m] 15:45:07.472 Java 17.0.14 Ubuntu (64-bit)
+[[1;34mINFO[m] 15:45:07.472 Linux 6.8.0-1021-aws (amd64)
+[[1;34mINFO[m] 15:45:08.130 User cache: /var/lib/jenkins/.sonar/cache
+[[1;34mINFO[m] 15:45:08.373 Communicating with SonarQube Server 25.2.0.102705
+[[1;34mINFO[m] 15:45:08.421 Default locale: "en", source code encoding: "UTF-8" (analysis is platform dependent)
+[[1;33mWARNING[m] 15:45:09.435 Property 'env.SONARQUBE_SCANNER_PARAMS' is encrypted. The encryption of scanner properties is deprecated and will soon be removed.
+[[1;34mINFO[m] 15:45:10.872 Load global settings
+[[1;34mINFO[m] 15:45:11.051 Load global settings (done) | time=179ms
+[[1;34mINFO[m] 15:45:11.098 Server id: 92D88F0A-AZUpCA7P7q_D8lQrnlRa
+[[1;34mINFO[m] 15:45:11.130 Loading required plugins
+[[1;34mINFO[m] 15:45:11.130 Load plugins index
+[[1;34mINFO[m] 15:45:11.160 Load plugins index (done) | time=30ms
+[[1;34mINFO[m] 15:45:11.160 Load/download plugins
+[[1;34mINFO[m] 15:45:11.231 Load/download plugins (done) | time=71ms
+[[1;34mINFO[m] 15:45:12.077 Process project properties
+[[1;34mINFO[m] 15:45:12.121 Process project properties (done) | time=44ms
+[[1;34mINFO[m] 15:45:12.142 Project key: org.scopeindia:01-maven-web-app
+[[1;34mINFO[m] 15:45:12.143 Base dir: /var/lib/jenkins/workspace/project
+[[1;34mINFO[m] 15:45:12.143 Working dir: /var/lib/jenkins/workspace/project/target/sonar
+[[1;34mINFO[m] 15:45:12.161 Load project settings for component key: 'org.scopeindia:01-maven-web-app'
+[[1;34mINFO[m] 15:45:12.183 Load project settings for component key: 'org.scopeindia:01-maven-web-app' (done) | time=22ms
+[[1;34mINFO[m] 15:45:12.250 Load quality profiles
+[[1;34mINFO[m] 15:45:12.345 Load quality profiles (done) | time=95ms
+[[1;34mINFO[m] 15:45:12.380 Auto-configuring with CI 'Jenkins'
+[[1;34mINFO[m] 15:45:12.437 Load active rules
+[[1;34mINFO[m] 15:45:12.914 Load active rules (done) | time=477ms
+[[1;34mINFO[m] 15:45:12.924 Load analysis cache
+[[1;34mINFO[m] 15:45:12.936 Load analysis cache (404) | time=12ms
+[[1;33mWARNING[m] 15:45:13.029 The property 'sonar.login' is deprecated and will be removed in the future. Please use the 'sonar.token' property instead when passing a token.
+[[1;34mINFO[m] 15:45:13.071 Preprocessing files...
+[[1;34mINFO[m] 15:45:13.301 2 languages detected in 4 preprocessed files
+[[1;34mINFO[m] 15:45:13.304 0 files ignored because of scm ignore settings
+[[1;34mINFO[m] 15:45:13.310 Loading plugins for detected languages
+[[1;34mINFO[m] 15:45:13.310 Load/download plugins
+[[1;34mINFO[m] 15:45:13.360 Load/download plugins (done) | time=50ms
+[[1;34mINFO[m] 15:45:13.683 Load project repositories
+[[1;34mINFO[m] 15:45:13.934 Load project repositories (done) | time=251ms
+[[1;34mINFO[m] 15:45:13.976 Indexing files...
+[[1;34mINFO[m] 15:45:13.977 Project configuration:
+[[1;34mINFO[m] 15:45:14.003 4 files indexed
+[[1;34mINFO[m] 15:45:14.007 Quality profile for jsp: Sonar way
+[[1;34mINFO[m] 15:45:14.007 Quality profile for xml: Sonar way
+[[1;34mINFO[m] 15:45:14.009 ------------- Run sensors on module 01-maven-web-app
+[[1;34mINFO[m] 15:45:14.143 Load metrics repository
+[[1;34mINFO[m] 15:45:14.171 Load metrics repository (done) | time=28ms
+[[1;34mINFO[m] 15:45:16.135 Sensor JavaSensor [java]
+[[1;34mINFO[m] 15:45:16.153 Configured Java source version (sonar.java.source): 5, preview features enabled (sonar.java.enablePreview): false
+[[1;34mINFO[m] 15:45:16.201 Server-side caching is enabled. The Java analyzer will not try to leverage data from a previous analysis.
+[[1;34mINFO[m] 15:45:16.202 No "Main" source files to scan.
+[[1;34mINFO[m] 15:45:16.215 No "Test" source files to scan.
+[[1;34mINFO[m] 15:45:16.215 No "Generated" source files to scan.
+[[1;34mINFO[m] 15:45:16.215 Sensor JavaSensor [java] (done) | time=81ms
+[[1;34mINFO[m] 15:45:16.215 Sensor HTML [web]
+[[1;34mINFO[m] 15:45:16.524 Sensor HTML [web] (done) | time=309ms
+[[1;34mINFO[m] 15:45:16.527 Sensor XML Sensor [xml]
+[[1;34mINFO[m] 15:45:16.565 2 source files to be analyzed
+[[1;34mINFO[m] 15:45:17.004 2/2 source files have been analyzed
+[[1;34mINFO[m] 15:45:17.006 Sensor XML Sensor [xml] (done) | time=479ms
+[[1;34mINFO[m] 15:45:17.006 Sensor JaCoCo XML Report Importer [jacoco]
+[[1;34mINFO[m] 15:45:17.009 'sonar.coverage.jacoco.xmlReportPaths' is not defined. Using default locations: target/site/jacoco/jacoco.xml,target/site/jacoco-it/jacoco.xml,build/reports/jacoco/test/jacocoTestReport.xml
+[[1;34mINFO[m] 15:45:17.010 No report imported, no coverage information will be imported by JaCoCo XML Report Importer
+[[1;34mINFO[m] 15:45:17.010 Sensor JaCoCo XML Report Importer [jacoco] (done) | time=4ms
+[[1;34mINFO[m] 15:45:17.010 Sensor Java Config Sensor [iac]
+[[1;34mINFO[m] 15:45:17.066 0 source files to be analyzed
+[[1;34mINFO[m] 15:45:17.066 0/0 source files have been analyzed
+[[1;34mINFO[m] 15:45:17.068 Sensor Java Config Sensor [iac] (done) | time=58ms
+[[1;34mINFO[m] 15:45:17.068 Sensor IaC Docker Sensor [iac]
+[[1;34mINFO[m] 15:45:17.264 0 source files to be analyzed
+[[1;34mINFO[m] 15:45:17.265 0/0 source files have been analyzed
+[[1;34mINFO[m] 15:45:17.265 Sensor IaC Docker Sensor [iac] (done) | time=197ms
+[[1;34mINFO[m] 15:45:17.265 Sensor TextAndSecretsSensor [text]
+[[1;34mINFO[m] 15:45:17.265 Available processors: 2
+[[1;34mINFO[m] 15:45:17.265 Using 2 threads for analysis.
+[[1;34mINFO[m] 15:45:18.036 The property "sonar.tests" is not set. To improve the analysis accuracy, we categorize a file as a test file if any of the following is true:
+  * The filename starts with "test"
+  * The filename contains "test." or "tests."
+  * Any directory in the file path is named: "doc", "docs", "test" or "tests"
+  * Any directory in the file path has a name ending in "test" or "tests"
+
+[[1;34mINFO[m] 15:45:18.101 Using git CLI to retrieve untracked files
+[[1;34mINFO[m] 15:45:18.123 Analyzing language associated files and files included via "sonar.text.inclusions" that are tracked by git
+[[1;34mINFO[m] 15:45:18.144 4 source files to be analyzed
+[[1;34mINFO[m] 15:45:18.205 4/4 source files have been analyzed
+[[1;34mINFO[m] 15:45:18.207 Sensor TextAndSecretsSensor [text] (done) | time=942ms
+[[1;34mINFO[m] 15:45:18.219 ------------- Run sensors on project
+[[1;34mINFO[m] 15:45:18.615 Sensor Zero Coverage Sensor
+[[1;34mINFO[m] 15:45:18.616 Sensor Zero Coverage Sensor (done) | time=1ms
+[[1;34mINFO[m] 15:45:18.635 CPD Executor 2 files had no CPD blocks
+[[1;34mINFO[m] 15:45:18.635 CPD Executor Calculating CPD for 0 files
+[[1;34mINFO[m] 15:45:18.637 CPD Executor CPD calculation finished (done) | time=0ms
+[[1;34mINFO[m] 15:45:18.671 SCM revision ID '1cfbd5a53066a9003f5d25faf825dde2a46c1618'
+[[1;34mINFO[m] 15:45:18.944 Analysis report generated in 271ms, dir size=235.4 kB
+[[1;34mINFO[m] 15:45:18.989 Analysis report compressed in 44ms, zip size=29.6 kB
+[[1;34mINFO[m] 15:45:19.025 Analysis report uploaded in 36ms
+[[1;34mINFO[m] 15:45:19.028 ANALYSIS SUCCESSFUL, you can find the results at: http://43.204.238.132:9000/dashboard?id=org.scopeindia%3A01-maven-web-app
+[[1;34mINFO[m] 15:45:19.028 Note that you will be able to access the updated dashboard once the server has processed the submitted analysis report
+[[1;34mINFO[m] 15:45:19.028 More about the report processing at http://43.204.238.132:9000/api/ce/task?id=052bf80b-0540-4a83-a62e-48e60be05a2a
+[[1;34mINFO[m] 15:45:19.054 Analysis total time: 7.692 s
+[[1;34mINFO[m] [1m------------------------------------------------------------------------[m
+[[1;34mINFO[m] [1;32mBUILD SUCCESS[m
+[[1;34mINFO[m] [1m------------------------------------------------------------------------[m
+[[1;34mINFO[m] Total time:  12.638 s
+[[1;34mINFO[m] Finished at: 2025-02-23T15:45:19Z
+[[1;34mINFO[m] [1m------------------------------------------------------------------------[m
+[Pipeline] }
+[Pipeline] // withCredentials
+[Pipeline] }
+[Pipeline] // withSonarQubeEnv
+[Pipeline] }
+[Pipeline] // withEnv
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Quality Gate)
+[Pipeline] tool
+[Pipeline] envVarsForTool
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] timeout
+Timeout set to expire in 5 min 0 sec
+[Pipeline] {
+[Pipeline] script
+[Pipeline] {
+[Pipeline] waitForQualityGate
+Checking status of SonarQube task '052bf80b-0540-4a83-a62e-48e60be05a2a' on server 'SonarQube'
+SonarQube task '052bf80b-0540-4a83-a62e-48e60be05a2a' status is 'IN_PROGRESS'
+SonarQube task '052bf80b-0540-4a83-a62e-48e60be05a2a' status is 'SUCCESS'
+SonarQube task '052bf80b-0540-4a83-a62e-48e60be05a2a' completed. Quality gate is 'OK'
+[Pipeline] }
+[Pipeline] // script
+[Pipeline] }
+[Pipeline] // timeout
+[Pipeline] }
+[Pipeline] // withEnv
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Upload to Nexus)
+[Pipeline] tool
+[Pipeline] envVarsForTool
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] withCredentials
+Masking supported pattern matches of $NEXUS_PASS
+[Pipeline] {
+[Pipeline] sh
++ mvn deploy:deploy-file -DgroupId=com.example -DartifactId=maven-web-app -Dversion=1.0 -Dpackaging=war -Dfile=target/maven-web-app.war -DrepositoryId=nexus -Durl=http://43.204.30.233:8081/repository/maven-releases/ -DgeneratePom=true -Dauth.basic=****:****
+[[1;34mINFO[m] Scanning for projects...
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m------------------< [0;36morg.scopeindia:01-maven-web-app[0;1m >-------------------[m
+[[1;34mINFO[m] [1mBuilding 01-maven-web-app 3.0-RELEASE[m
+[[1;34mINFO[m] [1m--------------------------------[ war ]---------------------------------[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-deploy-plugin:2.7:deploy-file[m [1m(default-cli)[m @ [36m01-maven-web-app[0;1m ---[m
+Uploading to nexus: http://43.204.30.233:8081/repository/maven-releases/com/example/maven-web-app/1.0/maven-web-app-1.0.war
+Progress (1): 4.1/111 kB
+Progress (1): 8.2/111 kB
+Progress (1): 12/111 kB 
+Progress (1): 16/111 kB
+Progress (1): 20/111 kB
+Progress (1): 25/111 kB
+Progress (1): 29/111 kB
+Progress (1): 33/111 kB
+Progress (1): 37/111 kB
+Progress (1): 41/111 kB
+Progress (1): 45/111 kB
+Progress (1): 49/111 kB
+Progress (1): 53/111 kB
+Progress (1): 57/111 kB
+Progress (1): 61/111 kB
+Progress (1): 66/111 kB
+Progress (1): 70/111 kB
+Progress (1): 74/111 kB
+Progress (1): 78/111 kB
+Progress (1): 82/111 kB
+Progress (1): 86/111 kB
+Progress (1): 90/111 kB
+Progress (1): 94/111 kB
+Progress (1): 98/111 kB
+Progress (1): 102/111 kB
+Progress (1): 106/111 kB
+Progress (1): 111/111 kB
+Progress (1): 111 kB    
+                    
+Uploaded to nexus: http://43.204.30.233:8081/repository/maven-releases/com/example/maven-web-app/1.0/maven-web-app-1.0.war (111 kB at 304 kB/s)
+Uploading to nexus: http://43.204.30.233:8081/repository/maven-releases/com/example/maven-web-app/1.0/maven-web-app-1.0.pom
+Progress (1): 425 B
+                   
+Uploaded to nexus: http://43.204.30.233:8081/repository/maven-releases/com/example/maven-web-app/1.0/maven-web-app-1.0.pom (425 B at 8.3 kB/s)
+Downloading from nexus: http://43.204.30.233:8081/repository/maven-releases/com/example/maven-web-app/maven-metadata.xml
+Progress (1): 300 B
+                   
+Downloaded from nexus: http://43.204.30.233:8081/repository/maven-releases/com/example/maven-web-app/maven-metadata.xml (300 B at 7.3 kB/s)
+Uploading to nexus: http://43.204.30.233:8081/repository/maven-releases/com/example/maven-web-app/maven-metadata.xml
+Progress (1): 300 B
+                   
+Uploaded to nexus: http://43.204.30.233:8081/repository/maven-releases/com/example/maven-web-app/maven-metadata.xml (300 B at 8.1 kB/s)
+[[1;34mINFO[m] [1m------------------------------------------------------------------------[m
+[[1;34mINFO[m] [1;32mBUILD SUCCESS[m
+[[1;34mINFO[m] [1m------------------------------------------------------------------------[m
+[[1;34mINFO[m] Total time:  2.018 s
+[[1;34mINFO[m] Finished at: 2025-02-23T15:45:26Z
+[[1;34mINFO[m] [1m------------------------------------------------------------------------[m
+[Pipeline] }
+[Pipeline] // withCredentials
+[Pipeline] }
+[Pipeline] // withEnv
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Deploy to Tomcat)
+[Pipeline] tool
+[Pipeline] envVarsForTool
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] withCredentials
+Masking supported pattern matches of $TOMCAT_PASS
+[Pipeline] {
+[Pipeline] sh
+Warning: A secret was passed to "sh" using Groovy String interpolation, which is insecure.
+		 Affected argument(s) used the following variable(s): [TOMCAT_PASS]
+		 See https://jenkins.io/redirect/groovy-string-interpolation for details.
++ curl -v -u ****:**** --upload-file target/maven-web-app.war http://3.108.59.248:8080/manager/text/deploy?path=/maven-web-app&update=true
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0*   Trying 3.108.59.248:8080...
+* Connected to 3.108.59.248 (3.108.59.248) port 8080
+* Server auth using Basic with user ****
+> PUT /manager/text/deploy?path=/maven-web-app&update=true HTTP/1.1
+> Host: 3.108.59.248:8080
+> Authorization: Basic ****46****
+> User-Agent: curl/8.5.0
+> Accept: */*
+> Content-Length: 110828
+> 
+} [65536 bytes data]
+* We are completely uploaded and fine
+< HTTP/1.1 200 
+< Cache-Control: private
+< X-Frame-Options: DENY
+< X-Content-Type-Options: nosniff
+< Content-Type: text/plain;charset=utf-8
+< Transfer-Encoding: chunked
+< Date: Sun, 23 Feb 2025 15:45:26 GMT
+< 
+{ [59 bytes data]
+
+100  108k    0    59  100  108k   1033  1895k --:--:-- --:--:-- --:--:-- 1899k
+* Connection #0 to host 3.108.59.248 left intact
+OK - Deployed application at context path [/maven-web-app]
+[Pipeline] }
+[Pipeline] // withCredentials
+[Pipeline] }
+[Pipeline] // withEnv
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] }
+[Pipeline] // withEnv
+[Pipeline] }
+[Pipeline] // withEnv
+[Pipeline] }
+[Pipeline] // node
+[Pipeline] End of Pipeline
+Finished: SUCCESS

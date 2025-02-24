@@ -1,4 +1,4 @@
-Started by admin
+Started by admi
 [Pipeline] Start of Pipeline
 [Pipeline] node
 Running on Jenkins in /var/lib/jenkins/workspace/project
